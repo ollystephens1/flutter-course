@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './pages/player.dart';
-
 class Players extends StatelessWidget {
   final List<Map<String, String>> players;
   final Function deletePlayer;
@@ -19,16 +17,11 @@ class Players extends StatelessWidget {
             children: <Widget>[
               FlatButton(
                 child: Text('Details'),
-                onPressed: () => Navigator.push(
+                onPressed: () => Navigator.pushNamed<bool>(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => PlayerPage(
-                              players[index]['title'],
-                              players[index]['imageUrl'],
-                            ),
-                      ),
-                    ).then((val) {
-                      if (val) {
+                      '/player/' + index.toString(),
+                    ).then((bool val) {
+                      if (val != null) {
                         deletePlayer(index);
                       }
                     }),
