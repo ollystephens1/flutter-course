@@ -1,41 +1,52 @@
 import 'package:flutter/material.dart';
 
 import './players.dart';
+import './player_control.dart';
 
 class PlayerManager extends StatefulWidget {
-  final String startingPlayer;
-  
-  PlayerManager(this.startingPlayer);
+  final Map<String, String> startingPlayer;
+
+  PlayerManager({this.startingPlayer});
 
   @override
-    State<StatefulWidget> createState() {
-      return _PlayerManagerState();
-    }
+  State<StatefulWidget> createState() {
+    return _PlayerManagerState();
+  }
 }
 
 class _PlayerManagerState extends State<PlayerManager> {
-  List<String> _players = []; 
+  List<Map<String, String>> _players = [];
 
   @override
-    void initState() {
-      super.initState();
+  void initState() {
+    if (widget.startingPlayer != null) {
       _players.add(widget.startingPlayer);
     }
+    super.initState();
+  }
+
+  void _addPlayer(Map<String, String> player) {
+    setState(() {
+      _players.add(player);
+    });
+  }
+
+  void _deletePlayer(int index) {
+    setState(() {
+      _players.removeAt(index);
+    });
+  }
 
   @override
-    Widget build(BuildContext context) {
-      return Column(children: [Container(
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Container(
         margin: EdgeInsets.all(10.0),
-        child: RaisedButton(
-          onPressed: () { 
-            setState(() {
-              _players.add('Dennis Bergkamp');
-            });
-          },
-          child: Text('Add Products')
-        ),
+        child: PlayerControl(_addPlayer),
       ),
-      Players(_players),
-      ]);
-    }
+      Expanded(
+        child: Players(_players, deletePlayer: _deletePlayer),
+      ),
+    ]);
+  }
 }
