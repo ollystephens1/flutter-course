@@ -17,9 +17,7 @@ class PlayersAdminPage extends StatelessWidget {
               ),
               ListTile(
                 title: Text('All Players'),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, '/');
-                },
+                onTap: () => Navigator.pushReplacementNamed(context, '/'),
               )
             ],
           ),

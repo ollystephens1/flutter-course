@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './pages/auth.dart';
 import './pages/players_admin.dart';
 import './pages/home.dart';
 import './pages/player.dart';
@@ -32,11 +31,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: AuthPage(),
       routes: {
         '/': (BuildContext context) =>
             HomePage(_players, _addPlayer, _deletePlayer),
-        '/admin': (BuildContext context) => PlayersAdminPage(),
+        '/admin': (BuildContext context) => PlayersAdminPage()
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -55,6 +53,11 @@ class _MyAppState extends State<MyApp> {
           );
         }
         return null;
+      },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                HomePage(_players, _addPlayer, _deletePlayer));
       },
     );
   }
